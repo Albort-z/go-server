@@ -9,12 +9,12 @@ import (
 )
 
 type Config struct {
-	Port int `json:"port"`
+	Addr string `json:"addr"`
 }
 
 func ReadConfig() (*Config, error) {
 	v := viper.New()
-	v.SetConfigFile("config.json")
+	v.SetConfigFile("config/config.json")
 
 	v.OnConfigChange(func(in fsnotify.Event) {
 		// 配置文件发生变更之后会调用的回调函数
@@ -31,6 +31,5 @@ func ReadConfig() (*Config, error) {
 
 	var c Config
 	err = v.Unmarshal(&c)
-	log.Println(c, v.Get("port"))
 	return &c, err
 }

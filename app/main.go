@@ -21,7 +21,7 @@ func main() {
 	}
 
 	// 初始化app
-	ser, err := core.NewService(c)
+	ser, err := core.NewCore(c)
 	if err != nil {
 		log.Fatal("初始化服务失败, err:", err)
 	}
