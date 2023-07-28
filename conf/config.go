@@ -9,7 +9,9 @@ import (
 )
 
 type Config struct {
-	Addr string `json:"addr"`
+	Addr     string `mapstructure:"addr"`
+	CertFile string `mapstructure:"cert_file"`
+	KeyFile  string `mapstructure:"key_file"`
 }
 
 func ReadConfig() (*Config, error) {
@@ -33,3 +35,4 @@ func ReadConfig() (*Config, error) {
 	err = v.Unmarshal(&c)
 	return &c, err
 }
+

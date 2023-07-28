@@ -10,22 +10,21 @@ import (
 	"go-task/core/service"
 )
 
-// 该文件为http服务的初始化文件，负责初始化接口
-
-func init() {
-}
-
 // Server 服务器
 type Server struct {
 	c      *conf.Config
 	svc    *service.Service
 	server *http.Server
+	// 证书与密钥文件路径
+	certFile, keyFile string
 }
 
 func NewServer(c *conf.Config, svc *service.Service) (*Server, error) {
 	var s = Server{
-		c:   c,
-		svc: svc,
+		c:        c,
+		svc:      svc,
+		certFile: c.CertFile,
+		keyFile:  c.KeyFile,
 	}
 	log.Println("初始化服务器")
 	return &s, nil
@@ -40,7 +39,12 @@ func (s *Server) RunServer() error {
 		Addr:    s.c.Addr,
 	}
 
-	err := s.server.ListenAndServe()
+	var err error
+	if s.certFile == "" {
+		err = s.server.ListenAndServe()
+	} else {
+		err = s.server.ListenAndServeTLS(s.certFile, s.keyFile)
+	}
 	return err
 }
 

@@ -1,3 +1,5 @@
 {
-  "addr": ":80"
+  "addr": ":4444",
+  "cert_file": "/opt/certs/cert",
+  "key_file": "/opt/certs/key"
 }
